@@ -1,17 +1,21 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<template lang="pug">
+  el-container#app
+    el-header
+      h1 WinesBar
+    el-main
+      WineList
+    el-footer
+      p Copyright &copy; 2019 by 
+        a(href="mailto:marudits@gmail.com") marudits
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import WineList from './components/WineList.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    WineList
   }
 }
 </script>
