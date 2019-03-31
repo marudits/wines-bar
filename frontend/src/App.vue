@@ -20,13 +20,36 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+<style lang="scss">
+header {
+  background-color: #68081f;
+  color: white;
+  font-weight: bolder;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+  h1 {
+    margin-top: 1rem;
+    margin-bottom: 0;
+  }
+}
+
+main {
+  padding: 1rem 1rem 5rem 1rem !important;
+}
+
+footer {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  width: 100%;
+  background-color: #68081f;
+  color: white;
+  z-index: 99;
+  text-align: center;
+
+  a {
+    cursor: pointer;
+    color: white !important;
+  }
 }
 </style>

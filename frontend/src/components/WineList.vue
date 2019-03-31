@@ -1,7 +1,7 @@
 <template lang="pug">
     .wine-list
         el-row(:gutter="8")
-            el-col(:span="14")
+            el-col(:sm="14" :xs="24")
                 el-input(placeholder="Filter wines" v-model="filter")
                 el-tree.filter-tree(
                     v-if="wines.list && wines.list.length > 0"
@@ -11,8 +11,8 @@
                     :filter-node-method="filterList"
                     node-key="id"
                     )
-                h4 There is no available wine(s) at the moment.
-            el-col(:span="10")
+                h4(v-else) There is no available wine(s) at the moment.
+            el-col(:sm="10" :xs="24")
                 el-card.box-card.order
                     div(slot="header").clearfix.order-title
                         h2 Your Order
@@ -20,13 +20,18 @@
                         div(v-if="wines.selected.length > 0" v-for="selected of wines.selected").order-list__item
                             h4 {{ selected.name }} 
                                 em {{ selected.price}}
-                            p {{ selected.label }}
-                        div(v-if="wines.selected.length === 0")
+                            p {{ selected.title }}
+                        div(v-if="wines.selected.length === 0").no-order
                             h4 No Order(s)
                     div.order-summary(v-if="wines.selected.length > 0")
                         el-row(type="flex")
                             el-col
-                                h4 Total
+                                h4 Total Items
+                            el-col.order-summary__price
+                                h4 &nbsp;{{ wines.selected.length }}
+                        el-row(type="flex")
+                            el-col
+                                h4 Total Price
                             el-col.order-summary__price
                                 h4 &nbsp;$ {{ order.total }}
                         el-row
@@ -151,6 +156,13 @@ export default {
             }
 
             &-list {
+                max-height: 50vh;
+                overflow-y: scroll;
+
+                .no-order {
+                    text-align: center;
+                }
+
                 &__item {
                     margin-bottom: .75rem;
                     h4 {
