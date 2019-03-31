@@ -4,5 +4,5 @@
 # http://pm2.keymetrics.io/
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 cd $DIR/../
-pm2 delete wines-bar-api
-pm2 --name wines-bar-api start npm -- start
+pm2 delete wines-bar-ui
+pm2 --name wines-bar-ui start npm -- start
