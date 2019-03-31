@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Script to run the application as node process
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+cd $DIR/../
+npm run start

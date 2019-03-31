@@ -1,6 +1,6 @@
 # WinesBar
 
-WinesBar is an simple application to simulate order wines in a bar. Data source is provided from[**RSS Feed**](https://www.winespectator.com/rss/rss?t=dwp)
+WinesBar is an simple application to simulate order wines in a bar. It is developed using Express for API and Vue.js as UI. Data source is provided from [**RSS Feed**](https://www.winespectator.com/rss/rss?t=dwp)
 
 ### Installation
 
@@ -15,21 +15,21 @@ $ npm -v
 
 ### Getting started
 
-You can run this application by execute *bash* files on `./bin` folder
+You can run this application by execute *bash* files on `./bin` (for API) and `./frontend/bin` (for UI) folder
 
 Setup project (install dependency)
 ```sh
-$ ./bin/setup
+$ ./setup
 ```
 
 Build project (optional)
 ```sh
-$ ./bin/build
+$ ./build
 ```
 
 Run application
 ```sh
-$ ./bin/(start|start_pm2)
+$ ./(start|start_pm2)
 ```
 
 Notes:

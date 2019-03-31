@@ -39,7 +39,9 @@ const wines = {
             .then(res => {
                 // update data
                 data['wines'] = {
-                    stocks: res.items,
+                    stocks: res.items.map(x => Object.assign({}, x, {
+                        isAvailableToday: isAvailableToday(x.isoDate)
+                    })),
                     last_update_time: new Date().getTime(),
                     title: res.title,
                     feed_url: res.feedUrl
@@ -98,9 +100,7 @@ const wines = {
 
         for(let wine of data.wines.stocks){
             if(orderedWinesId.indexOf(getWinesIdFromGuid(wine.guid)) !== -1){
-                orderedWines.push(Object.assign({}, wine, {
-                    isAvailableToday: isAvailableToday(wine.isoDate)
-                }))
+                orderedWines.push(wine);
             }
         }
         
