@@ -7,6 +7,7 @@ const CONSTANTS = require('../shared/constants');
 
 // utils
 const Envelope = require('../utils/envelope');
+const { logger } = require('../utils/logger');
 const { getISODate, isAvailableToday, getWinesIdFromGuid } = require('../utils/string-formatter');
 
 let data = {
@@ -21,6 +22,9 @@ let data = {
 const wines = {
     getWines: async (req, res) => {
         const START_EXEC = process.hrtime();
+
+        // logger
+        logger(CONSTANTS.LOG.ACTIONS.WINE.LIST);
 
         /*
          * only update stocks (call rss)
@@ -54,20 +58,36 @@ const wines = {
         const START_EXEC = process.hrtime();
 
         const { id } = req.params;
+
+        // logger
+        logger(CONSTANTS.LOG.ACTIONS.WINE.DETAILS + ' id: ' + id);
         
         if(!id){
-            res.status(400).json(new Envelope(false, { message: CONSTANTS.RESPONSE.CODE['400'], details: `Requires wines(ids) as request params` }, { exec_time: process.hrtime(START_EXEC) }));
+            res.status(400).json(new Envelope(false, { message: CONSTANTS.RESPONSE.CODE['400'], details: `Requires wine (id) as request params` }, { exec_time: process.hrtime(START_EXEC) }));
+            return;
+        }
+
+        if(!data.wines.stocks){
+            res.status(404).json(new Envelope(false, { message: CONSTANTS.RESPONSE.CODE['404'], details: `There is no wines data` }, { exec_time: process.hrtime(START_EXEC) }));
             return;
         }
 
         let payload = data.wines.stocks.filter(x => getWinesIdFromGuid(x.guid) === id);
 
-        res.status(payload && payload.length > 0 !== null ? 200 : 404).json(new Envelope(payload && payload.length > 0, payload && payload.length > 0 ? payload : { message: CONSTANTS.RESPONSE.CODE['404']} , { exec_time: process.hrtime(START_EXEC), title: data.wines.title, feed_url: data.wines.feed_url }));
+        if(payload && payload.length === 1){
+            payload[0]['isAvailableToday'] = isAvailableToday(payload[0].isoDate);
+            res.status(200).json(new Envelope(true, payload, { exec_time: process.hrtime(START_EXEC), title: data.wines.title, feed_url: data.wines.feed_url }));
+        } else {
+            res.status(404).json(new Envelope(false, { message: CONSTANTS.RESPONSE.CODE['404']} , { exec_time: process.hrtime(START_EXEC), title: data.wines.title, feed_url: data.wines.feed_url }));
+        }
     },
     orderWines: (req, res) => {
         const START_EXEC = process.hrtime();
 
         let { wines } = req.body;
+
+        // logger
+        logger(CONSTANTS.LOG.ACTIONS.WINE.ORDER + ' wines: ' + wines);
 
         if(!wines){
             res.status(400).json(new Envelope(false, { message: CONSTANTS.RESPONSE.CODE['400'], details: `Requires wines(ids) as request body` }, { exec_time: process.hrtime(START_EXEC) }));
