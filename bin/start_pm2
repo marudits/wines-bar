@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Script to run the application as pm2 process
+# Make sure you have `pm2` installed on your machine
+# http://pm2.keymetrics.io/
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+cd $DIR/../
+pm2 delete wines-bar
+pm2 --name wines-bar start npm -- start
